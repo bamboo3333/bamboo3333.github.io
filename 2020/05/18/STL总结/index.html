@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hWgoBZQkUMWQMPy9peEqTA-392tIlRwEhQOJ5c_90Kg">
+  <meta name="baidu-site-verification" content="<meta name="baidu-site-verification" content="8NXsGZWl4A" />">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://gbw610.top').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.7.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":true,"color":"#F73809","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="C++ 的标准模板库（Standard Template Library，STL）是泛型程序设计最成功应用的实例。STL 是一些常用数据结构（如链表、可变长数组、排序二叉树）和算法（如排序、查找）的模板的集合，主要由 Alex Stepanov 主持开发，于 1998 年被加入 C++ 标准。  c++容器 容器（container）用于存放数据的类模板。可变长数组、链表、平衡二叉树等数据结构在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STL总结">
+<meta property="og:url" content="http://gbw610.top/2020/05/18/STL%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="靜閿の博客">
+<meta property="og:description" content="C++ 的标准模板库（Standard Template Library，STL）是泛型程序设计最成功应用的实例。STL 是一些常用数据结构（如链表、可变长数组、排序二叉树）和算法（如排序、查找）的模板的集合，主要由 Alex Stepanov 主持开发，于 1998 年被加入 C++ 标准。  c++容器 容器（container）用于存放数据的类模板。可变长数组、链表、平衡二叉树等数据结构在">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-05-18T01:43:42.000Z">
+<meta property="article:modified_time" content="2020-05-20T03:17:42.000Z">
+<meta property="article:author" content="Mark">
+<meta property="article:tag" content="c++">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://gbw610.top/2020/05/18/STL%E6%80%BB%E7%BB%93/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>STL总结 | 靜閿の博客</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?b1ca7cf99add75cea953c75348c6f333";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">靜閿の博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">记录迈向成功的每一个脚印...</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>阅读排行</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">8</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">4</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">28</span></a>
+
+  </li>
+        <li class="menu-item menu-item-album">
+
+    <a href="/album/" rel="section"><i class="fa fa-fw fa-image"></i>相册</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/bamboo3333" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://gbw610.top/2020/05/18/STL%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Mark">
+      <meta itemprop="description" content="说点什么呢...">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="靜閿の博客">
+    </span>
+      <header class="post-header">
+
+        <h1 class="post-title" itemprop="name headline">
+          STL总结
+        </h1>
+
+        <div class="post-meta">
+					<!--添加文章置顶图标-->
+	
+		<i class="fa fa-thumbs-up"></i>
+		<font color="red">置顶</font>
+		<span class="post-meta-divider">|</span>
+	
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-18 09:43:42" itemprop="dateCreated datePublished" datetime="2020-05-18T09:43:42+08:00">2020-05-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-20 11:17:42" itemprop="dateModified" datetime="2020-05-20T11:17:42+08:00">2020-05-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/c-%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index">
+                    <span itemprop="name">c++基础</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/05/18/STL%E6%80%BB%E7%BB%93/" class="post-meta-item leancloud_visitors" data-flag-title="STL总结" title="热度">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">热度：</span>
+              <span class="leancloud-visitors-count"></span>
+			  <span>℃</span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/05/18/STL%E6%80%BB%E7%BB%93/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/18/STL%E6%80%BB%E7%BB%93/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>C++ 的标准模板库（Standard Template Library，STL）是泛型程序设计最成功应用的实例。STL 是一些常用数据结构（如链表、可变长数组、排序二叉树）和算法（如排序、查找）的模板的集合，主要由 Alex Stepanov 主持开发，于 1998 年被加入 C++ 标准。</p>
+</blockquote>
+<h2 id="c-容器"><a href="#c-容器" class="headerlink" title="c++容器"></a>c++容器</h2><blockquote>
+<p>容器（container）用于存放数据的类模板。可变长数组、链表、平衡二叉树等数据结构在 STL 中都被实现为容器.</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="顺序容器"><a href="#顺序容器" class="headerlink" title="顺序容器"></a>顺序容器</h3><blockquote>
+<p>元素在容器中的位置同元素的值无关，即容器不是排序的。将元素插入容器时，指定在什么位置（尾部、头部或中间某处）插入，元素就会位于什么位置。</p>
+</blockquote>
+<p>主要包括：可变长动态数组vector，双端队列 deque、双向链表 list。</p>
+<h3 id="关联容器"><a href="#关联容器" class="headerlink" title="关联容器"></a>关联容器</h3><blockquote>
+<p>关联容器内的元素是排序的。插入元素时，容器会按一定的排序规则将元素放到适当的位置上，因此插入元素时不能指定位置。</p>
+</blockquote>
+<p>主要包括：set、multiset、map、multimap。</p>
+<h3 id="容器适配器"><a href="#容器适配器" class="headerlink" title="容器适配器"></a>容器适配器</h3><blockquote>
+<p>STL在两类容器的基础上屏蔽一部分功能，突出或增加另一部分功能，实现了三种容器适配器：栈(stack)队列(queue)、优先级队列 (priority_queue)。<br><br></p>
+</blockquote>
+<h2 id="通用操作"><a href="#通用操作" class="headerlink" title="通用操作"></a>通用操作</h2><h3 id="容器函数"><a href="#容器函数" class="headerlink" title="容器函数"></a>容器函数</h3><blockquote>
+<p>所有容器都可以使用的成员函数</p>
+</blockquote>
+<ul>
+<li>int size()：返回容器对象中元素的个数。</li>
+<li>bool empty()：判断容器对象是否为空。</li>
+</ul>
+<h3 id="顺序容器和关联容器共有成员函数"><a href="#顺序容器和关联容器共有成员函数" class="headerlink" title="顺序容器和关联容器共有成员函数"></a>顺序容器和关联容器共有成员函数</h3><ul>
+<li>begin()：返回指向容器中第一个元素的迭代器。</li>
+<li>end()：返回指向容器中最后一个元素后面的位置的迭代器。</li>
+<li>rbegin()：返回指向容器中最后一个元素的反向迭代器。</li>
+<li>rend()：返回指向容器中第一个元素前面的位置的反向迭代器。</li>
+<li>erase(…)：从容器中删除一个或几个元素。</li>
+<li>clear()：从容器中删除所有元素。</li>
+</ul>
+<h3 id="顺序容器专享成员函数"><a href="#顺序容器专享成员函数" class="headerlink" title="顺序容器专享成员函数"></a>顺序容器专享成员函数</h3><ul>
+<li>front()：返回容器中第一个元素的引用。</li>
+<li>back()：返回容器中最后一个元素的引用。</li>
+<li>push_back()：在容器末尾增加新元素。</li>
+<li>pop_back()：删除容器末尾的元素。</li>
+<li>insert(…)：插入一个或多个元素。</li>
+</ul>
+<h2 id="迭代器-Iterator"><a href="#迭代器-Iterator" class="headerlink" title="迭代器(Iterator)"></a>迭代器(Iterator)</h2><blockquote>
+<p>迭代器是一个变量，相当于容器和操纵容器的算法之间的中介。迭代器可以指向容器中的某个元素，通过迭代器就可以读写它指向的元素。从这一点上看，迭代器和指针类似。</p>
+</blockquote>
+<h3 id="迭代器定义方式"><a href="#迭代器定义方式" class="headerlink" title="迭代器定义方式"></a>迭代器定义方式</h3><ol>
+<li>正向迭代器</li>
+</ol>
+<blockquote>
+<p>容器类名::iterator  迭代器名;<br>example:vector<int>::iteartor i;</p>
+</blockquote>
+<ol start="2">
+<li><p>常量正向迭代器</p>
+<blockquote>
+<p>容器类名::const_iterator  迭代器名;</p>
+</blockquote>
+</li>
+<li><p>反向迭代器</p>
+<blockquote>
+<p>容器类名::reverse_iterator  迭代器名;</p>
+</blockquote>
+</li>
+<li><p>常量反向迭代器</p>
+<blockquote>
+<p>容器类名::const_reverse_iterator  迭代器名;</p>
+</blockquote>
+</li>
+</ol>
+<p>###迭代器用法示例</p>
+<blockquote>
+<p>迭代器都可以进行++操作</p>
+<blockquote>
+<p>对正向迭代器进行++操作时，迭代器会指向容器中的后一个元素。<br>而对反向迭代器进行++操作时，迭代器会指向容器中的前一个元素。</p>
+</blockquote>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;  <span class="comment">//v是存放int类型变量的可变长数组,初始为空</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> n = <span class="number">0</span>; n&lt;<span class="number">5</span>; ++n)</span><br><span class="line">        v.push_back(n);  <span class="comment">//push_back成员函数在vector容器尾部添加一个元素</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::iterator i;  <span class="comment">//定义正向迭代器</span></span><br><span class="line">    <span class="keyword">for</span> (i = v.begin(); i != v.end(); ++i) &#123;  <span class="comment">//用迭代器遍历容器</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; *i &lt;&lt; <span class="string">" "</span>;  <span class="comment">//*i 就是迭代器i指向的元素</span></span><br><span class="line">        *i += <span class="number">2</span>;  <span class="comment">//每个元素变为原来的2倍</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="comment">//用反向迭代器遍历容器</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::reverse_iterator j = v.rbegin(); j != v.rend(); ++j)</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; *j &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">    system(<span class="string">"pause"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：<br>0 1 2 3 4<br>6 5 4 3 2</p>
+<div class="note warning">
+            <ol><li>注意定义为常量迭代器时第12行’*i+=2;’是会报错的，迭代器的值不能更改。</li><li>容器适配器 stack、queue 和 priority_queue 没有迭代器。</li></ol>
+          </div>
+<p>###迭代器功能分类</p>
+<div class="note success">
+            <p>不同容器的迭代器，其功能强度是不同的</p>
+          </div>
+<ol>
+<li>正向迭代器<br> 迭代器p是正向迭代器，则支持++p,p++,*p,==,!=</li>
+<li>双向迭代器(list,set/multiset,map/multimap)<br> 包含正向迭代器的所有功能，还支持–p，p–</li>
+<li>随机访问迭代器(vector,deque)<br> 包含前者功能，还支持随机访问<ul>
+<li>p+=i：使得 p 往后移动 i 个元素。</li>
+<li>p-=i：使得 p 往前移动 i 个元素。</li>
+<li>p+i：返回 p 后面第 i 个元素的迭代器。</li>
+<li>p-i：返回 p 前面第 i 个元素的迭代器。</li>
+<li>p[i]：返回 p 后面第 i 个元素的引用。</li>
+</ul>
+</li>
+</ol>
+<div class="note info">
+            <ol><li>两个随机访问迭代器 p1、p2 还可以用 &lt;、&gt;、&lt;=、&gt;= 运算符进行比较。p1&lt;p2的含义是：p1 经过若干次（至少一次）++操作后，就会等于 p2。其他比较方式的含义与此类似。</li><li>对于两个随机访问迭代器 p1、p2，表达式p2-p1也是有定义的，其返回值是 p2 所指向元素和 p1 所指向元素的序号之差（也可以说是 p2 和 p1 之间的元素个数减一）</li></ol>
+          </div>
+
+<p>示例代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">v</span><span class="params">(<span class="number">100</span>)</span></span>; <span class="comment">//v被初始化成有100个元素</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; v.size() ; ++i) <span class="comment">//size返回元素个数</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; v[i]; <span class="comment">//像普通数组一样使用vector容器</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::iterator i;</span><br><span class="line">    <span class="keyword">for</span>(i = v.begin(); i != v.end (); ++i) <span class="comment">//用 != 比较两个迭代器</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; * i;</span><br><span class="line">    <span class="keyword">for</span>(i = v.begin(); i &lt; v.end ();++i) <span class="comment">//用 &lt; 比较两个迭代器</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; * i;</span><br><span class="line">    i = v.begin();</span><br><span class="line">    <span class="keyword">while</span>(i &lt; v.end()) &#123; <span class="comment">//间隔一个输出</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; * i;</span><br><span class="line">        i += <span class="number">2</span>; <span class="comment">// 随机访问迭代器支持 "+= 整数"  的操作</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="迭代器辅助函数"><a href="#迭代器辅助函数" class="headerlink" title="迭代器辅助函数"></a>迭代器辅助函数</h3><ol>
+<li>advance(p, n)：使迭代器 p 向前或向后移动 n 个元素。</li>
+<li>distance(p, q)：计算两个迭代器之间的距离，即迭代器 p 经过多少次 + + 操作后和迭代器 q 相等。如果调用时 p 已经指向 q 的后面，则这个函数会陷入死循环。</li>
+<li>iter_swap(p, q)：用于交换两个迭代器 p、q 指向的值。<br>使用时需要引入algorithm库</li>
+<li>next(iterator i):指向i的下一个迭代器</li>
+<li>prev(i):指向i的前一个迭代器</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;list&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt; //要使用操作迭代器的函数模板，需要包含此文件</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a[<span class="number">5</span>] = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span> &#125;;</span><br><span class="line">    <span class="built_in">list</span> &lt;<span class="keyword">int</span>&gt; lst(a, a+<span class="number">5</span>);</span><br><span class="line">    <span class="built_in">list</span> &lt;<span class="keyword">int</span>&gt;::iterator p = lst.begin();</span><br><span class="line">    advance(p, <span class="number">1</span>);  <span class="comment">//p向后移动1个元素，指向2</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"1)"</span> &lt;&lt; *p &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">//输出 1)2</span></span><br><span class="line">    advance(p, <span class="number">-1</span>);  <span class="comment">//p向前移动一个元素，指向1</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"2)"</span> &lt;&lt; *p &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">//输出 2)1</span></span><br><span class="line">    <span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt;::iterator q = lst.end();</span><br><span class="line">    q--;  <span class="comment">//q 指向 5</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"3)"</span> &lt;&lt; distance(p, q) &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">//输出 3)4</span></span><br><span class="line">    iter_swap(p, q); <span class="comment">//交换 1 和 5</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"4)"</span>;</span><br><span class="line">    <span class="keyword">for</span> (p = lst.begin(); p != lst.end(); ++p)</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; *p &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="STL算法："><a href="#STL算法：" class="headerlink" title="STL算法："></a>STL算法：</h2><ol>
+<li>copy：将一个容器的内容复制到另一个容器。</li>
+<li>remove：在容器中删除一个元素。</li>
+<li>random_shuffle：随机打乱容器中的元素。</li>
+<li>fill：用某个值填充容器。</li>
+<li>find：在容器中查找元素。</li>
+<li>count_if：统计容器中符合某种条件的元素的个数。</li>
+<li>sort:排序</li>
+</ol>
+<h2 id="vector"><a href="#vector" class="headerlink" title="vector"></a>vector</h2><blockquote>
+<p>顺序容器，支持STL中的所有算法，使用vector，需要包含vector头文件<br>随机访问元素的开销是常数，尾部添加元素的消耗时间也是常数，中间插入和删除涉及到元素的移动，消耗时间与元素个数有关<br>vector采用动态分配数组来存储元素，默认大小是32个元素存储空间，超过这个数时，需要把之前的元素复制到另外开辟的空间上，此时添加元素的时间开销不是常数。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">成员函数</th>
+<th align="left">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">vector()</td>
+<td align="left">无参构造函数，将容器初始化为空</td>
+</tr>
+<tr>
+<td align="center">vector(int n)</td>
+<td align="left">将容器初始化为有 n 个元素</td>
+</tr>
+<tr>
+<td align="center">vector(int n, const T &amp; val)</td>
+<td align="left">假定元素的类型是 T，此构造函数将容器初始化为有 n 个元素，每 个元素的值都是 val</td>
+</tr>
+<tr>
+<td align="center">vector(iterator first, iterator last)</td>
+<td align="left">first 和 last 可以是其他容器的迭代器。一般来说，本构造函数初始化的结果就是将 vector 容器的内容变成与其他容器上的区间 [first, last) —致</td>
+</tr>
+<tr>
+<td align="center">void clear()</td>
+<td align="left">删除所有元素</td>
+</tr>
+<tr>
+<td align="center">bool empty()</td>
+<td align="left">判断容器是否为空</td>
+</tr>
+<tr>
+<td align="center">void pop_back()</td>
+<td align="left">删除容器末尾的元素</td>
+</tr>
+<tr>
+<td align="center">void push_back( const T &amp; val)</td>
+<td align="left">将 val 添加到容器末尾</td>
+</tr>
+<tr>
+<td align="center">int size()</td>
+<td align="left">返回容器中元素的个数</td>
+</tr>
+<tr>
+<td align="center">T &amp; front()</td>
+<td align="left">返回容器中第一个元素的引用</td>
+</tr>
+<tr>
+<td align="center">T &amp; back()</td>
+<td align="left">返回容器中最后一个元素的引用</td>
+</tr>
+<tr>
+<td align="center">iterator insert(iterator i, const T &amp; val)</td>
+<td align="left">将 val 插入迭代器 i 指向的位置，返回 i</td>
+</tr>
+<tr>
+<td align="center">iterator insert( iterator i, iterator first, iterator last)</td>
+<td align="left">将其他容器上的区间 [first, last) 中的元素插入迭代器 i 指向的位置</td>
+</tr>
+<tr>
+<td align="center">iterator erase(iterator i)</td>
+<td align="left">删除迭代器 i 指向的元素，返回值是被删元素后面的元素的迭代器</td>
+</tr>
+<tr>
+<td align="center">iterator erase(iterator first, iterator last)</td>
+<td align="left">删除容器中的区间 [first, last)</td>
+</tr>
+<tr>
+<td align="center">void swap( vector <T> &amp; v)</td>
+<td align="left">将容器自身的内容和另一个同类型的容器 v 互换</td>
+</tr>
+</tbody></table>
+<h2 id="list"><a href="#list" class="headerlink" title="list"></a>list</h2><blockquote>
+<p>顺序容器，双向链表<br>使用时需要引入list库文件<br>定位到元素位置之后，增删元素时间为常数<br>|成员函数|解释|<br>|:—:|:—|<br>|void push_front(const T &amp; val)|将 val 插入链表最前面|<br>|void pop_front()|删除链表最前面的元素|<br>|void sort()|将链表从小到大排序|<br>|void remove (const T &amp; val)|删除和 val 相等的元素|<br>|remove_if|删除符合某种条件的元素|<br>|void unique()|删除所有和前一个元素相等的元素|<br>|void merge(list <T> &amp; x)|将链表 x 合并进来并清空 x。要求链表自身和 x 都是有序的|<br>|void splice(iterator i, list <T> &amp; x, iterator first, iterator last)|在位置 i 前面插入链表 x 中的区间 [first, last)，并在链表 x 中删除该区间。链表自身和链表 x 可以是同一个链表，只要 i 不在 [first, last) 中即可|</p>
+</blockquote>
+<blockquote>
+<p>STL 中的算法 sort 可以用来对 vector 和 deque 排序，它需要随机访问迭代器的支持。因为 list 不支持随机访问迭代器，所以不能用算法 sort 对 list 容器排序。因此，list 容器引入了 sort 成员函数以完成排序。</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;list&gt;  //使用 list 需要包含此头文件</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;  //使用STL中的算法需要包含此头文件</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>: <span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    A(<span class="keyword">int</span> n_) &#123; n = n_; &#125;</span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span> &lt; (<span class="keyword">const</span> A &amp; a1, <span class="keyword">const</span> A &amp; a2);</span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span> == (<span class="keyword">const</span> A &amp; a1, <span class="keyword">const</span> A &amp; a2);</span><br><span class="line">    <span class="keyword">friend</span> ostream &amp; <span class="keyword">operator</span> &lt;&lt; (ostream &amp; o, <span class="keyword">const</span> A &amp; a);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">bool</span> <span class="keyword">operator</span> &lt; (<span class="keyword">const</span> A &amp; a1, <span class="keyword">const</span> A &amp; a2) &#123;</span><br><span class="line">    <span class="keyword">return</span> a1.n &lt; a2.n;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">bool</span> <span class="keyword">operator</span> == (<span class="keyword">const</span> A &amp; a1, <span class="keyword">const</span> A &amp; a2) &#123;</span><br><span class="line">    <span class="keyword">return</span> a1.n == a2.n;</span><br><span class="line">&#125;</span><br><span class="line">ostream &amp; <span class="keyword">operator</span> &lt;&lt; (ostream &amp; o, <span class="keyword">const</span> A &amp; a) &#123;</span><br><span class="line">    o &lt;&lt; a.n;</span><br><span class="line">    <span class="keyword">return</span> o;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">Print</span>(<span class="title">T</span> <span class="title">first</span>, <span class="title">T</span> <span class="title">last</span>)</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">for</span> (; first != last; ++first)</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; *first &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    A a[<span class="number">5</span>] = &#123; <span class="number">1</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">2</span> &#125;;</span><br><span class="line">    A b[<span class="number">7</span>] = &#123; <span class="number">10</span>, <span class="number">30</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">40</span> &#125;;</span><br><span class="line">    list&lt;A&gt; lst1(a, a + 5), lst2(b, b + 7);</span><br><span class="line">    lst1.sort();</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"1)"</span>; Print(lst1.begin(), lst1.end());  <span class="comment">//输出：1)1 2 2 3 4</span></span><br><span class="line">    lst1.remove(<span class="number">2</span>);  <span class="comment">//删除所有和A(2)相等的元素</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"2)"</span>; Print(lst1.begin(), lst1.end());  <span class="comment">//输出：2)1 3 4</span></span><br><span class="line">    lst2.pop_front();  <span class="comment">//删除第一个元素</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"3)"</span>; Print(lst2.begin(), lst2.end());  <span class="comment">//输出：3)30 20 30 30 40 40</span></span><br><span class="line">    lst2.unique();  <span class="comment">//删除所有和前一个元素相等的元素</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"4)"</span>; Print(lst2.begin(), lst2.end());  <span class="comment">//输出：4)30 20 30 40</span></span><br><span class="line">    lst2.sort();</span><br><span class="line">    lst1.merge(lst2);  <span class="comment">//合并 lst2 到 lst1 并清空 lst2</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"5)"</span>; Print(lst1.begin(), lst1.end());  <span class="comment">//输出：5)1 3 4 20 30 30 40</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"6)"</span>; Print(lst2.begin(), lst2.end());  <span class="comment">//lst2是空的，输出：6)</span></span><br><span class="line">    lst1.reverse();  <span class="comment">//将 lst1 前后颠倒</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"7)"</span>; Print(lst1.begin(), lst1.end());  <span class="comment">//输出 7)40 30 30 20 4 3 1</span></span><br><span class="line">    lst2.insert(lst2.begin(), a + <span class="number">1</span>, a + <span class="number">4</span>);  <span class="comment">//在 lst2 中插入 3,2,4 三个元素</span></span><br><span class="line">    <span class="built_in">list</span> &lt;A&gt;::iterator p1, p2, p3;</span><br><span class="line">    p1 = find(lst1.begin(), lst1.end(), <span class="number">30</span>);</span><br><span class="line">    p2 = find(lst2.begin(), lst2.end(), <span class="number">2</span>);</span><br><span class="line">    p3 = find(lst2.begin(), lst2.end(), <span class="number">4</span>);</span><br><span class="line">    lst1.splice(p1, lst2, p2, p3);  <span class="comment">//将[p2, p3)插入p1之前，并从 lst2 中删除[p2,p3)</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"8)"</span>; Print(lst1.begin(), lst1.end());  <span class="comment">//输出：8)40 2 30 30 20 4 3 1</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"9)"</span>; Print(lst2.begin(), lst2.end());  <span class="comment">//输出：9)3 4</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="deque"><a href="#deque" class="headerlink" title="deque"></a>deque</h2><blockquote>
+<p>顺序容器，可变长数组，所以vector的成员函数，deque都有<br>deque 在头尾增删元素都具有较好的性能</p>
+</blockquote>
+<p>相比于vector多了下面两个成员函数</p>
+<div class="note info">
+            <p>void push_front (const T &amp; val);  //将 val 插入容器的头部<br>void pop_front();  //删除容器头部的元素</p>
+          </div>
+
+<h2 id="关联容器-1"><a href="#关联容器-1" class="headerlink" title="关联容器"></a>关联容器</h2><blockquote>
+<p>关联容器内部的元素都是排好序的，有以下四种:<br>set：排好序的集合，不允许有相同元素。<br>multiset：排好序的集合，允许有相同元素。<br>map：每个元素都分为关键字和值两部分，容器中的元素是按关键字排序的。不允许有多个元素的关键字相同。<br>multimap：和 map 类似，差别在于元素的关键字可以相同。</p>
+</blockquote>
+<p>学前了解：<font color=red>pair模板</font></p>
+<div class="note success">
+            <p>由于关联容器的一些成员函数的返回值是 pair 对象，而且 map 和 multimap 容器中的元素都是 pair 对象，所以在学习之前，首先认识一下pair对象</p>
+          </div>
+<p><a href="https://www.cnblogs.com/YangKun-/p/12519094.html" target="_blank" rel="noopener" class="zhihu">pair对象模板简介</a></p>
+<h3 id="set"><a href="#set" class="headerlink" title="set"></a>set</h3><blockquote>
+<p>set 是关联容器的一种,是排序好的集合(元素已经进行了排序)。set 中不能有重复的元素。</p>
+</blockquote>
+<div class="note warning">
+            <p>不能直接修改set容器中元素的值。因为元素被修改后，容器并不会自动重新调整顺序,于是容器的有序性就会被破坏,再在其上进行查找等操作就会得到错误的结果。因此,如果要修改set容器中某个元素的值,正确的做法是先删除该元素,再插入新元素。</p>
+          </div>
+<table>
+<thead>
+<tr>
+<th align="center">成员函数</th>
+<th align="left">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">iterator find (const T &amp; val);</td>
+<td align="left">在容器中查找值为 val 的元素，返回其迭代器。如果找不到，返 回 end()</td>
+</tr>
+<tr>
+<td align="center">pair&lt;iterator, bool&gt; insert(const T &amp; val);</td>
+<td align="left">将 val 插入容器中并返回其迭代器和bool对象bool为true表示插入成功</td>
+</tr>
+<tr>
+<td align="center">void insert(iterator first, iterator last);</td>
+<td align="left">将区间 [first, last) 中的元素插人容器</td>
+</tr>
+<tr>
+<td align="center">int count( const T &amp; val);</td>
+<td align="left">统计有多少个元素的值和 val 相等</td>
+</tr>
+<tr>
+<td align="center">iterator lower_bound( const T &amp; val);</td>
+<td align="left">查找一个最大的位置 it，使得 [begin(), it) 中所有的元素者比 val 小</td>
+</tr>
+<tr>
+<td align="center">iterator upper_bound( const T &amp; val);</td>
+<td align="left">查找一个最小的位置 it，使得 [it, end()) 中所有的元素都比 val 大</td>
+</tr>
+<tr>
+<td align="center">pair &lt;iterator, iterator &gt; equal_range (const T &amp; val);</td>
+<td align="left">同时求得 lower_bound 和 upper_bound</td>
+</tr>
+<tr>
+<td align="center">iterator erase(iterator it);</td>
+<td align="left">删除 it 指向的元素，返回其后面的元素的迭代器（Visual Studio 2010 中如此，但是在 C++ 标准和 Dev C++ 中，返回值不是这样）</td>
+</tr>
+<tr>
+<td align="center">iterator erase(iterator first, iterator last);</td>
+<td align="left">删除区间 [first, last)，返回 last（Visual Studio 2010 中如此，但是在 C++ 标准和 Dev C++ 中，返回值不是这样）</td>
+</tr>
+</tbody></table>
+<p>使用小测试</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;set&gt;  //使用set须包含此文件</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="built_in">set</span>&lt;<span class="keyword">int</span>&gt;::iterator IT;</span><br><span class="line">    <span class="keyword">int</span> a[<span class="number">5</span>] = &#123; <span class="number">3</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">1</span>,<span class="number">2</span> &#125;;</span><br><span class="line">    <span class="function"><span class="built_in">set</span>&lt;<span class="keyword">int</span>&gt; <span class="title">st</span><span class="params">(a,a+<span class="number">5</span>)</span></span>;    <span class="comment">// st里是 1 2 3 4 6</span></span><br><span class="line">    pair&lt; IT,<span class="keyword">bool</span>&gt; result;</span><br><span class="line">    result = st.insert(<span class="number">5</span>); <span class="comment">// st变成  1 2 3 4 5 6</span></span><br><span class="line">    <span class="keyword">if</span>(result.second)    <span class="comment">//插入成功则输出被插入元素</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; * result.first  &lt;&lt; <span class="string">" inserted"</span> &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//输出: 5 inserted</span></span><br><span class="line">    <span class="keyword">if</span>(st.insert(<span class="number">5</span>).second)</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; * result.first  &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; * result.first &lt;&lt; <span class="string">" already exists"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="comment">//输出 5 already exists</span></span><br><span class="line">    pair&lt;IT,IT&gt; bounds = st.equal_range(<span class="number">4</span>);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; * bounds.first &lt;&lt; <span class="string">","</span> &lt;&lt; * bounds.second ;  <span class="comment">//输出：4,5</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="multiset"><a href="#multiset" class="headerlink" title="multiset"></a>multiset</h3><div class="note primary">
+            <p>multiset 是关联容器的一种，是排序好的集合（元素已经进行了排序），并且允许有相同的元素。它和 et的差别在于set中不能有重复的元素。 set的成员函数 multiset 中都有。</p>
+          </div>
+
+<h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><blockquote>
+<p>map 是关联容器的一种，map 的每个元素都分为关键字和值两部分，容器中的元素是按关键字排序的，并且不允许有多个元素的关键字相同。</p>
+</blockquote>
+<div class="note warning">
+            <p>不能直接修改 map 容器中的关键字。因为 map 中的元素是按照关键字排序的，当关键字被修改后，容器并不会自动重新调整顺序，于是容器的有序性就会被破坏，再在其上进行查找等操作就会得到错误的结果。</p>
+          </div>
+
+<p>成员函数和set大同小异，使用方法也类似</p>
+<table>
+<thead>
+<tr>
+<th align="center">成员函数</th>
+<th align="left">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">iterator find( const Key &amp; val);</td>
+<td align="left">在容器中查找关键字等于 val 的元素，返回其迭代器；如果找不到，返回 end()</td>
+</tr>
+<tr>
+<td align="center">iterator insert (pair &lt;Key, T&gt; const &amp;p);</td>
+<td align="left">将 pair 对象 p 插入容器中并返回其迭代器</td>
+</tr>
+<tr>
+<td align="center">void insert(iterator first, iterator last);</td>
+<td align="left">将区间 [first, last) 插入容器</td>
+</tr>
+<tr>
+<td align="center">int count( const Key &amp; val);</td>
+<td align="left">统计有多少个元素的关键字和 val 相等</td>
+</tr>
+<tr>
+<td align="center">iterator lower_bound( const Key &amp; val);</td>
+<td align="left">查找一个最大的位置 it，使得 [begin( ), it) 中所有的元素的关键字都比 val 小</td>
+</tr>
+<tr>
+<td align="center">iterator upper_bound(const Key &amp; val);</td>
+<td align="left">查找一个最小的位置 it，使得 [it, end()) 中所有的元素的关键字都比 val 大</td>
+</tr>
+<tr>
+<td align="center">pair &lt; iterator, iterator &gt; equal_range (const Key &amp; val);</td>
+<td align="left">同时求得 lower_bound 和 upper_bound</td>
+</tr>
+<tr>
+<td align="center">iterator erase(iterator it);</td>
+<td align="left">删除 it 指向的元素，返回其后面的元素的迭代器（Visual Studio 2010 中如此，但是在 C++ 标准和 Dev C++ 中，返回值不是这样）</td>
+</tr>
+<tr>
+<td align="center">iterator erase(iterator first, iterator last);</td>
+<td align="left">删除区间 [first, last)，返回 last（Visual Studio 2010 中如此，但是在 C++ 标准和 Dev C++ 中，返回值不是这样）</td>
+</tr>
+</tbody></table>
+<h3 id="multimap"><a href="#multimap" class="headerlink" title="multimap"></a>multimap</h3><div class="note info">
+            <p>与map操作基本相同，主要区别时key值允许重复</p>
+          </div>
+
+<h2 id="容器适配器-1"><a href="#容器适配器-1" class="headerlink" title="容器适配器"></a>容器适配器</h2><blockquote>
+<p>STL 中的容器适配器有 stack、queue、priority_queue 三种。它们都是在顺序容器的基础上实现的，屏蔽了顺序容器的一部分功能，突出或增加了另外一些功能。</p>
+</blockquote>
+<p>容器适配器都有以下三个成员函数：</p>
+<div class="note success">
+            <ul><li>push：添加一个元素。</li><li>top：返回顶部（对 stack 而言）或队头（对 queue,priority_queue 而言）的元素的引用。</li><li>pop：删除一个元素。</li></ul>
+          </div>
+
+<h3 id="stack"><a href="#stack" class="headerlink" title="stack"></a>stack</h3><blockquote>
+<p>stack就是“栈”。栈是一种后进先出的元素序列，访问和删除都只能对栈顶的元素（即最后一个被加入栈的元素）进行，并且元素也只能被添加到栈顶。栈内的元素不能访问。如果一定要访问栈内的元素，只能将其上方的元素全部从栈中删除，使之变成栈顶元素才可以。</p>
+</blockquote>
+<div class="note primary">
+            <p>使用时包含stack头文件<br>在默认情况下，stack 就是用 deque 实现的。当然，也可以指定用 vector 或 list 实现。</p>
+          </div>
+
+<table>
+<thead>
+<tr>
+<th align="left">成员函数</th>
+<th align="left">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">void pop();</td>
+<td align="left">弹出（即删除）栈顶元素</td>
+</tr>
+<tr>
+<td align="left">T &amp; top();</td>
+<td align="left">返回栈顶元素的引用。通过此函数可以读取栈顶元素的值，也可以修改栈顶元素</td>
+</tr>
+<tr>
+<td align="left">void push (const T &amp; x);</td>
+<td align="left">将 x 压入栈顶</td>
+</tr>
+</tbody></table>
+<h3 id="queue"><a href="#queue" class="headerlink" title="queue"></a>queue</h3><blockquote>
+<p>queue 就是“队列”。队列是先进先出的，和排队类似。队头的访问和删除操作只能在队头进行，添加操作只能在队尾进行。不能访问队列中间的元素。</p>
+</blockquote>
+<div class="note primary">
+            <p>使用时包含queue头文件<br>queue 可以用 list 和 deque 实现，默认情况下用 deque 实现。<br>queue 同样也有和 stack 类似的 push、pop、top 函数。区别在于，queue 的 push 发生在队尾，pop 和 top 发生在队头。    </p>
+          </div>
+
+<h3 id="priority-queue"><a href="#priority-queue" class="headerlink" title="priority_queue"></a>priority_queue</h3><blockquote>
+<p>priority_queue 是“优先队列”。它和普通队列的区别在于，优先队列的队头元素总是最大的——即执行 pop 操作时，删除的总是最大的元素；执行 top 操作时，返回的是最大元素的引用。</p>
+</blockquote>
+<div class="note primary">
+            <ul><li>使用时包含queue头文件</li><li>queue 可以用 list 和 deque 实现，默认情况下用 deque 实现。</li><li>queue 同样也有和 stack 类似的 push、pop、top 函数。区别在于，queue 的 push 发生在队尾，pop 和 top 发生在队头。<br>priority_queue 可以用 vector 和 deque 实现，默认情况下用 vector 实现。</li><li>priority_queue 默认的元素比较器是 less <T>。也就是说，在默认情况下，要放入 priority_queue 的元素必须是能用“&lt;”运算符进行比较的，而且 priority _queue 保证以下条件总是成立：对于队头的元素 x 和任意非队头的元素 y，表达式“x&lt;y”必为 false。priority_queue 的第三个类型参数可以用来指定排序规则。</li></ul>
+          </div>
+
+<h2 id="string类"><a href="#string类" class="headerlink" title="string类"></a>string类</h2><ol>
+<li>创建string</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s</span><span class="params">()</span></span>;<span class="comment">//s=""</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s1</span><span class="params">(<span class="string">"123"</span>)</span></span>;<span class="comment">//s1="123"</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s2</span><span class="params">(<span class="number">2</span>,<span class="string">'a'</span>)</span></span>;<span class="comment">//s2="aa"</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s3</span><span class="params">(<span class="string">"12345670"</span>,<span class="number">1</span>,<span class="number">3</span>)</span></span>;<span class="comment">//s4="234"</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>赋值</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> s1,s2;</span><br><span class="line">s1 = <span class="string">"Hello,world"</span>;</span><br><span class="line">s2 = <span class="string">'a'</span>;<span class="comment">//</span></span><br></pre></td></tr></table></figure>
+<div class="note info">
+            <p>string的成员函数assig()也可以用来赋值，约等于’=’;</p>
+          </div>
+
+<ol start="3">
+<li><p>求长度</p>
+<blockquote>
+<p>s.length()或者s.size()</p>
+</blockquote>
+</li>
+<li><p>字符串连接</p>
+</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s1.append(s2);</span><br><span class="line">s1.append(s2,<span class="number">1</span>,<span class="number">2</span>);</span><br><span class="line">s1.append(<span class="number">3</span>,<span class="string">'a'</span>);</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>string对象比较<blockquote>
+<p>可以用&lt; &lt;= == != &gt;= &gt;<br>可以用int compare()函数,返回值：0-&gt;相等；</p>
+</blockquote>
+</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">string s1("hello"), s2("hello, world");</span><br><span class="line"><span class="keyword">int</span> n = s1.compare(s2);</span><br><span class="line">n = s1.compare(<span class="number">1</span>, <span class="number">2</span>, s2, <span class="number">0</span>, <span class="number">3</span>);  <span class="comment">//比较s1的子串 (1,2) 和s2的子串 (0,3)</span></span><br><span class="line">n = s1.compare(<span class="number">0</span>, <span class="number">2</span>, s2);  <span class="comment">// 比较s1的子串 (0,2) 和 s2</span></span><br><span class="line">n = s1.compare(<span class="string">"Hello"</span>);</span><br><span class="line">n = s1.compare(<span class="number">1</span>, <span class="number">2</span>, <span class="string">"Hello"</span>);  <span class="comment">//比较 s1 的子串(1,2)和"Hello”</span></span><br><span class="line">n = s1.compare(<span class="number">1</span>, <span class="number">2</span>, <span class="string">"Hello"</span>, <span class="number">1</span>, <span class="number">2</span>);  <span class="comment">//比较 s1 的子串(1,2)和 "Hello" 的子串(1,2)</span></span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>求子串</li>
+</ol>
+<blockquote>
+<p>string substr()函数</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> s1 = <span class="string">"hello"</span>;</span><br><span class="line"><span class="built_in">string</span> s2 = s1.substr(<span class="number">2</span>, <span class="number">4</span>);  <span class="comment">// s2 = "llo"</span></span><br><span class="line">s2 = s1.substr(<span class="number">1</span>);  <span class="comment">// s2 = "ello"</span></span><br></pre></td></tr></table></figure>
+<ol start="7">
+<li>交换<blockquote>
+<p>swap()</p>
+</blockquote>
+</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">string s1("123"),s2("456");</span><br><span class="line">s1.swap(s2);</span><br></pre></td></tr></table></figure>
+<ol start="8">
+<li>查找</li>
+</ol>
+<div class="note success">
+            <ul><li>find：从前往后查找子串或字符出现的位置。</li><li>rfind：从后往前查找子串或字符出现的位置。</li><li>find_first_of：从前往后查找何处出现另一个字符串中包含的字符。例如：s1.find_first_of(“ab”);  //查找s1中第一次出现”ab”中任一字符的位置</li><li>find_last_of：从后往前查找何处出现另一个字符串中包含的字符。</li><li>find_first_not_of：从前往后查找何处出现另一个字符串中没有包含的字符。</li><li>find_last_not_of：从后往前查找何处出现另一个字符串中没有包含的字符</li></ul>
+          </div>
+
+<ol start="9">
+<li>替换子串</li>
+</ol>
+<blockquote>
+<p>replace()</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s1</span><span class="params">(<span class="string">"hahahaha"</span>)</span></span>;</span><br><span class="line">s1.replace(<span class="number">1</span>, <span class="number">3</span>, <span class="string">"123456"</span>, <span class="number">2</span>, <span class="number">4</span>);  <span class="comment">//用 "123456" 的子串从2开始的4个元素 替换 s1 的子串(1,3)</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; s1 &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">//输出 h3456haha</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s2</span><span class="params">(<span class="string">"xixixi"</span>)</span></span>;</span><br><span class="line">s2.replace(<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="string">'0'</span>);  <span class="comment">//用 5 个 '0' 替换子串(2,3)</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; s2 &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">//输出 xi00000xi</span></span><br><span class="line"><span class="keyword">int</span> n = s2.find(<span class="string">"OOOOO"</span>);  <span class="comment">//查找子串 "00000" 的位置，n=2</span></span><br><span class="line">s2.replace(n, <span class="number">5</span>, <span class="string">"111"</span>);  <span class="comment">//将子串(n,5)替换为"XXX"</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; s2 &lt; &lt; <span class="built_in">endl</span>;  <span class="comment">//输出 xi1110xi</span></span><br></pre></td></tr></table></figure>
+
+<ol start="10">
+<li>删除字串</li>
+</ol>
+<blockquote>
+<p>erase()成员函数可以删除 string 对象中的子串，返回值为对象自身的引用。</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s1.erase(<span class="number">1</span>,<span class="number">3</span>);<span class="comment">//范围删除</span></span><br><span class="line">s1.erase(<span class="number">2</span>);<span class="comment">//删除索引2之后的所有元素</span></span><br></pre></td></tr></table></figure>
+<ol start="11">
+<li>插入字符串</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">string s1("hihihi"), s2("00");</span><br><span class="line">s1.insert(<span class="number">2</span>, <span class="string">"123"</span>);  <span class="comment">//在下标 2 处插入字符串"123"，s1 = "hi123hihi"</span></span><br><span class="line">s1.insert(<span class="number">3</span>, s2);  <span class="comment">//在下标 2 处插入 s2 , s1 = "hi00123hihi"</span></span><br><span class="line">s1.insert(<span class="number">3</span>, <span class="number">5</span>, <span class="string">'1'</span>);  <span class="comment">//在下标 3 处插入 5 个 'X'，s1 = "hi0111110123hihi"</span></span><br></pre></td></tr></table></figure>
+<ol start="12">
+<li>流转换</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">s</span><span class="params">(<span class="string">"hi 99 5.21 hello k"</span>)</span></span>;</span><br><span class="line">    <span class="function"><span class="built_in">istringstream</span> <span class="title">istrStream</span><span class="params">(s)</span></span>; <span class="comment">//建立s到istrStream的联系</span></span><br><span class="line">    <span class="built_in">string</span> s1, s2;</span><br><span class="line">    <span class="keyword">int</span> n;  <span class="keyword">double</span> d;  <span class="keyword">char</span> c;</span><br><span class="line">    istrStream &gt;&gt; s1 &gt;&gt; n &gt;&gt; d &gt;&gt; s2 &gt;&gt; c; <span class="comment">//把s的内容当做输入流进行读取</span></span><br><span class="line">    <span class="built_in">ostringstream</span> ostrStream;</span><br><span class="line">    ostrStream &lt;&lt; s1 &lt;&lt; <span class="built_in">endl</span> &lt;&lt; s2 &lt;&lt; <span class="built_in">endl</span> &lt;&lt; n &lt;&lt; <span class="built_in">endl</span> &lt;&lt; d &lt;&lt; <span class="built_in">endl</span> &lt;&lt; c &lt;&lt;<span class="built_in">endl</span>;<span class="comment">//此时所有的值都已经按空格分配</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; ostrStream.str();<span class="comment">//将ostrStream中的所有值显示出来</span></span><br><span class="line">    system(<span class="string">"pause"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="13">
+<li>STL操作字符串</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">s</span><span class="params">(<span class="string">"afgcbed"</span>)</span></span>;</span><br><span class="line">    <span class="built_in">string</span>::iterator p = find(s.begin(), s.end(), <span class="string">'c'</span>);</span><br><span class="line">    <span class="keyword">if</span> (p!= s.end())</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; p - s.begin() &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">//输出 3</span></span><br><span class="line">    sort(s.begin(), s.end());</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; s &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">//输出 abcdefg</span></span><br><span class="line">    system(<span class="string">"pause"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    
+    
+    
+	<!--文章末尾添加结束表示-->
+	<div>
+	
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-heart"></i>感谢阅读-------------</div>
+    
+</div>
+	
+	</div>
+
+	
+<div>
+      
+          
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2020/05/18/STL%E6%80%BB%E7%BB%93/">STL总结</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Mark 的个人博客">Mark</a></p>
+  <p><span>发布时间:</span>2020年05月18日 - 09:05</p>
+  <p><span>最后更新:</span>2020年05月20日 - 11:05</p>
+  <p><span>原始链接:</span><a href="/2020/05/18/STL%E6%80%BB%E7%BB%93/" title="STL总结">http://gbw610.top/2020/05/18/STL%E6%80%BB%E7%BB%93/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://gbw610.top/2020/05/18/STL%E6%80%BB%E7%BB%93/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+      $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+        });
+    });  
+</script>
+
+      
+</div>
+        <div class="reward-container">
+  <div>亲,留步</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Mark 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Mark 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/c/" rel="tag"><i class="fa fa-tag"></i> c++</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/18/%E4%B9%98%E7%A7%AF%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84/" rel="prev" title="乘积最大子数组">
+      <i class="fa fa-chevron-left"></i> 乘积最大子数组
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/19/K%E7%AB%99%E4%B8%AD%E8%BD%AC%E5%86%85%E6%9C%80%E4%BE%BF%E5%AE%9C%E7%9A%84%E8%88%AA%E7%8F%AD/" rel="next" title="K站中转内最便宜的航班">
+      K站中转内最便宜的航班 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#c-容器"><span class="nav-number">1.</span> <span class="nav-text">c++容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#顺序容器"><span class="nav-number">1.1.</span> <span class="nav-text">顺序容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关联容器"><span class="nav-number">1.2.</span> <span class="nav-text">关联容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容器适配器"><span class="nav-number">1.3.</span> <span class="nav-text">容器适配器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通用操作"><span class="nav-number">2.</span> <span class="nav-text">通用操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#容器函数"><span class="nav-number">2.1.</span> <span class="nav-text">容器函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#顺序容器和关联容器共有成员函数"><span class="nav-number">2.2.</span> <span class="nav-text">顺序容器和关联容器共有成员函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#顺序容器专享成员函数"><span class="nav-number">2.3.</span> <span class="nav-text">顺序容器专享成员函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迭代器-Iterator"><span class="nav-number">3.</span> <span class="nav-text">迭代器(Iterator)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代器定义方式"><span class="nav-number">3.1.</span> <span class="nav-text">迭代器定义方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代器辅助函数"><span class="nav-number">3.2.</span> <span class="nav-text">迭代器辅助函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STL算法："><span class="nav-number">4.</span> <span class="nav-text">STL算法：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vector"><span class="nav-number">5.</span> <span class="nav-text">vector</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#list"><span class="nav-number">6.</span> <span class="nav-text">list</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deque"><span class="nav-number">7.</span> <span class="nav-text">deque</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关联容器-1"><span class="nav-number">8.</span> <span class="nav-text">关联容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#set"><span class="nav-number">8.1.</span> <span class="nav-text">set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#multiset"><span class="nav-number">8.2.</span> <span class="nav-text">multiset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#map"><span class="nav-number">8.3.</span> <span class="nav-text">map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#multimap"><span class="nav-number">8.4.</span> <span class="nav-text">multimap</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容器适配器-1"><span class="nav-number">9.</span> <span class="nav-text">容器适配器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#stack"><span class="nav-number">9.1.</span> <span class="nav-text">stack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#queue"><span class="nav-number">9.2.</span> <span class="nav-text">queue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#priority-queue"><span class="nav-number">9.3.</span> <span class="nav-text">priority_queue</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#string类"><span class="nav-number">10.</span> <span class="nav-text">string类</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mark"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Mark</p>
+  <div class="site-description" itemprop="description">说点什么呢...</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/bamboo3333" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;bamboo3333" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://me.csdn.net/qq_42376889" title="CSDN → https:&#x2F;&#x2F;me.csdn.net&#x2F;qq_42376889" rel="noopener" target="_blank">CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.baidu.com/" title="Baidu → https:&#x2F;&#x2F;www.baidu.com" rel="noopener" target="_blank">Baidu</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      博客推荐
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/qq_42376889/article/details/105558723" title="https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_42376889&#x2F;article&#x2F;details&#x2F;105558723" rel="noopener" target="_blank">SpringBoot项目部署到云服务器三部曲</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+	  <!--添加tag云-->
+	
+		<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+		<div class="widget-wrap">
+			<div id="myCanvasContainer" class="widget tagcloud">
+				<canvas width="220" height="250" id="resCanvas" style="width=100%">
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BFS/" rel="tag">BFS</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DFS/" rel="tag">DFS</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Next/" rel="tag">Next</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/" rel="tag">c++</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cin/" rel="tag">cin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/multiset/" rel="tag">multiset</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a><span class="tag-list-count">17</span></li></ul>
+				</canvas>
+			</div>
+		</div>
+	
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mark</span>
+</div>
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	<div>
+		<span>
+		<span >访问量:<span id="busuanzi_value_site_pv"></span>次</span>
+		<span class="post-meta-divider">|
+		</span>
+		<span >访客数:<span id="busuanzi_value_site_uv"></span>人</span>
+	</div>
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 23569,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: 'y5oXKi70BWjenSMLugWyBQ1h-gzGzoHsz',
+      appKey: 'Rr8aI4SwVXHwjReJuBxk3idn',
+      placeholder: "欢迎发言(*^_^*)",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '10' || 10,
+      visitor: true,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: true,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+  
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+<!-- 页面点击小红心 -->
+<!-- <script type="text/javascript" src="/js/clicklove.js"></script> -->
+  <!-- 自己添加的 -->
+  
+
+  <script async src="/js/cursor/firework.js"></script>
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+  
+<!--添加知乎连接脚本-->
+<script type="text/javascript" src="/js/zhihu.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>

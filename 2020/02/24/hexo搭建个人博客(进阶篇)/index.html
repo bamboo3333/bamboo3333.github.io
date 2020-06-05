@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="hWgoBZQkUMWQMPy9peEqTA-392tIlRwEhQOJ5c_90Kg">
+  <meta name="baidu-site-verification" content="<meta name="baidu-site-verification" content="8NXsGZWl4A" />">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://gbw610.top').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.7.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":true,"color":"#F73809","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="经过基础篇的热身，我们将正式进入自制个性博客站点环节，一起打造属于自己独特的博客吧！   特别提示:   站点文件是在站点目录下，即在你创建的博客文件夹下 主题配置文件在themes&#x2F;next&#x2F;下    配置博客基本信息">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo搭建个人博客(进阶篇)">
+<meta property="og:url" content="http://gbw610.top/2020/02/24/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2(%E8%BF%9B%E9%98%B6%E7%AF%87)/index.html">
+<meta property="og:site_name" content="靜閿の博客">
+<meta property="og:description" content="经过基础篇的热身，我们将正式进入自制个性博客站点环节，一起打造属于自己独特的博客吧！   特别提示:   站点文件是在站点目录下，即在你创建的博客文件夹下 主题配置文件在themes&#x2F;next&#x2F;下    配置博客基本信息">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/24/33Odeg.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/24/33XP6f.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/24/33vpsf.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/24/33vofs.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/24/33x4u6.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/24/33zuaF.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/24/38SmQI.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/24/3896qx.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/24/38F6pD.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/24/38Aqwn.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/24/38V1u4.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/24/38ZnZd.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/24/38UrL9.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/24/38aL7R.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/24/38dG40.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/24/380J6U.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/24/38BwDg.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/24/38BIa9.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/24/38rBhn.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/24/38cS3R.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/24/38Rjqx.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/24/38WuFS.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/24/38W0SJ.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/24/38Hym4.png">
+<meta property="article:published_time" content="2020-02-24T02:32:55.000Z">
+<meta property="article:modified_time" content="2020-02-24T02:32:55.000Z">
+<meta property="article:author" content="Mark">
+<meta property="article:tag" content="hexo">
+<meta property="article:tag" content="Next">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.ax1x.com/2020/02/24/33Odeg.png">
+
+<link rel="canonical" href="http://gbw610.top/2020/02/24/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2(%E8%BF%9B%E9%98%B6%E7%AF%87)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>hexo搭建个人博客(进阶篇) | 靜閿の博客</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?b1ca7cf99add75cea953c75348c6f333";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">靜閿の博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">记录迈向成功的每一个脚印...</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>阅读排行</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">8</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">4</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">28</span></a>
+
+  </li>
+        <li class="menu-item menu-item-album">
+
+    <a href="/album/" rel="section"><i class="fa fa-fw fa-image"></i>相册</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/bamboo3333" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://gbw610.top/2020/02/24/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2(%E8%BF%9B%E9%98%B6%E7%AF%87)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Mark">
+      <meta itemprop="description" content="说点什么呢...">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="靜閿の博客">
+    </span>
+      <header class="post-header">
+
+        <h1 class="post-title" itemprop="name headline">
+          hexo搭建个人博客(进阶篇)
+        </h1>
+
+        <div class="post-meta">
+					<!--添加文章置顶图标-->
+	
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-24 10:32:55" itemprop="dateCreated datePublished" datetime="2020-02-24T10:32:55+08:00">2020-02-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" itemprop="url" rel="index">
+                    <span itemprop="name">博客搭建</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/02/24/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2(%E8%BF%9B%E9%98%B6%E7%AF%87)/" class="post-meta-item leancloud_visitors" data-flag-title="hexo搭建个人博客(进阶篇)" title="热度">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">热度：</span>
+              <span class="leancloud-visitors-count"></span>
+			  <span>℃</span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/02/24/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2(%E8%BF%9B%E9%98%B6%E7%AF%87)/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/02/24/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2(%E8%BF%9B%E9%98%B6%E7%AF%87)/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>经过基础篇的热身，我们将正式进入自制个性博客站点环节，一起打造属于自己独特的博客吧！</p>
+</blockquote>
+<blockquote>
+<p><font color=red>特别提示:</font></p>
+<blockquote>
+<ul>
+<li>站点文件是在站点目录下，即在你创建的博客文件夹下</li>
+<li>主题配置文件在themes/next/下</li>
+</ul>
+</blockquote>
+</blockquote>
+<h2 id="配置博客基本信息"><a href="#配置博客基本信息" class="headerlink" title="配置博客基本信息"></a>配置博客基本信息</h2><a id="more"></a>
+<blockquote>
+<p>在站点目录下打开<font color=red>_config.yml</font>配置基本信息</p>
+</blockquote>
+<blockquote>
+<p>推荐一个超级好用的文本编辑器<font color=red>Notepad++</font></p>
+</blockquote>
+<p><img src="https://s2.ax1x.com/2020/02/24/33Odeg.png" alt="setting.png"><br>对部分对应的效果进行展示如下：<br><img src="https://s2.ax1x.com/2020/02/24/33XP6f.png" alt="show.png"></p>
+<blockquote>
+<p>也许你的界面和我的不一样，不要着急，马上你的就会变得beautiful！</p>
+</blockquote>
+<h2 id="配置主题"><a href="#配置主题" class="headerlink" title="配置主题"></a>配置主题</h2><blockquote>
+<p>hexo默认的主题实在是太low了，接下来我们就配置一个个性化的主题来养养眼！</p>
+</blockquote>
+<h3 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h3><blockquote>
+<p>(如果嫌弃麻烦可以直接食用方法2，方法2异常时再食用方法1即可)</p>
+</blockquote>
+<p>博客主题有很多，你可以根据自己需要选取<a href="https://hexo.io/themes/" target="_blank" rel="noopener">点我</a>,可以跟着博主选择next主题，网上的资料较多，出问题时容易解决</p>
+<h4 id="进入网站后进行如下操作"><a href="#进入网站后进行如下操作" class="headerlink" title="进入网站后进行如下操作"></a>进入网站后进行如下操作</h4><p><img src="https://s2.ax1x.com/2020/02/24/33vpsf.png" alt="search.png"></p>
+<h4 id="点击进入"><a href="#点击进入" class="headerlink" title="点击进入"></a>点击进入</h4><p><img src="https://s2.ax1x.com/2020/02/24/33vofs.png" alt="7.7.1.png"></p>
+<h4 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h4><p><img src="https://s2.ax1x.com/2020/02/24/33x4u6.png" alt="window.png"></p>
+<h4 id="将下载的文件解压到博客站点文件夹-themes下，并命名为next"><a href="#将下载的文件解压到博客站点文件夹-themes下，并命名为next" class="headerlink" title="将下载的文件解压到博客站点文件夹\themes下，并命名为next"></a>将下载的文件解压到博客站点文件夹\themes下，并命名为<font color=red>next</font></h4><p><img src="https://s2.ax1x.com/2020/02/24/33zuaF.png" alt="33zuaF.png"></p>
+<h4 id="注意，一般解压之后文件会嵌套几个文件，这里next目录下应为下图所示，如果不是，把下图所示的所有文件剪贴到next目录下即可"><a href="#注意，一般解压之后文件会嵌套几个文件，这里next目录下应为下图所示，如果不是，把下图所示的所有文件剪贴到next目录下即可" class="headerlink" title="注意，一般解压之后文件会嵌套几个文件，这里next目录下应为下图所示，如果不是，把下图所示的所有文件剪贴到next目录下即可"></a>注意，一般解压之后文件会嵌套几个文件，这里next目录下应为下图所示，如果不是，把下图所示的所有文件剪贴到next目录下即可</h4><p><img src="https://s2.ax1x.com/2020/02/24/38SmQI.png" alt="sample.png"></p>
+<h3 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h3><p>在自己站点根目录下打开git bash(我这里时Hexo文件夹下)，输入下面的命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;theme-next&#x2F;hexo-theme-next themes&#x2F;next</span><br></pre></td></tr></table></figure>
+<p>成功之后同样在themes目录下有next主题文件夹了！</p>
+<h2 id="演示next"><a href="#演示next" class="headerlink" title="演示next"></a>演示next</h2><blockquote>
+<p>我们下载的主题到底什么样呢？接下来我们就来配置</p>
+</blockquote>
+<p>打开<font color = red>站点配置文件</font>_config.yml进行以下设置：<br>Ctrl+F查找theme，将<font color = red>theme:landscape</font>修改为<font color = red>theme:next</font><br><img src="https://s2.ax1x.com/2020/02/24/3896qx.png" alt="theme.png"><br>然后<font color = red>hexo g</font>再<font color = red>hexo s</font>即可看到next主题。</p>
+<blockquote>
+<p>我肯定你看到的并不是你想看到的，还是太丑了对不对？没关系，下面我们就来优化它！</p>
+</blockquote>
+<h2 id="主题优化"><a href="#主题优化" class="headerlink" title="主题优化"></a>主题优化</h2><blockquote>
+<p>到目前为止，所有的基本博客配置已经完成，下面就会进行各种骚操作来完成个性主题的优化！</p>
+</blockquote>
+<h3 id="设置头像，并带有旋转效果"><a href="#设置头像，并带有旋转效果" class="headerlink" title="设置头像，并带有旋转效果"></a>设置头像，并带有旋转效果</h3><p>打开themes/next/_config.yml,Ctrl+F查找avatar<br>如下图所示：<br><img src="https://s2.ax1x.com/2020/02/24/38F6pD.png" alt="avatar.png"><br>其中<font color = red>images</font>文件夹在themes/next/source/images，将自己的头像放在此目录下即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;以后每次修改之后刷新即可看到效果</span><br><span class="line">&#x2F;&#x2F;如果不行执行下面指令</span><br><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<h3 id="设置个人社交图标链接"><a href="#设置个人社交图标链接" class="headerlink" title="设置个人社交图标链接"></a>设置个人社交图标链接</h3><p>实现结果如图<br><img src="https://s2.ax1x.com/2020/02/24/38Aqwn.png" alt="sample.png"><br>打开themes\next_config.yml,找到social，根据自己需要添加即可(其中||后面是图标)<br><img src="https://s2.ax1x.com/2020/02/24/38V1u4.png" alt="social.png"></p>
+<div class="note info">
+            <p>name是你的图标名字，你可以去<a href="https://www.bootcss.com/p/font-awesome/#" target="_blank" rel="noopener">Font Awesome</a>挑选你喜欢的图标复制名字即可，如icon-laptop,只需要将name更改为laptop，next中已经提前集成了，如果没有，便会用问号代替</p>
+          </div>
+
+
+<h3 id="设置炫酷动态背景"><a href="#设置炫酷动态背景" class="headerlink" title="设置炫酷动态背景"></a>设置炫酷动态背景</h3><p>实现效果：</p>
+<p><img src="https://s2.ax1x.com/2020/02/24/38ZnZd.png" alt="action.png"></p>
+<p>打开<font color=red>next/layout/_layout.swig</font>复制下面代码粘贴到<font color=red>&#60;/body&#62;</font>前面即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  &#123;% if theme.canvas_nest %&#125;</span><br><span class="line">&lt;script type&#x3D;&quot;text&#x2F;javascript&quot; src&#x3D;&quot;&#x2F;&#x2F;cdn.bootcss.com&#x2F;canvas-nest.js&#x2F;1.0.0&#x2F;canvas-nest.min.js&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+<p>然后打开主题配置文件_config.yml,找到canvas_nest,修改如下：<br><img src="https://s2.ax1x.com/2020/02/24/38UrL9.png" alt="canvas.png"></p>
+<h3 id="设置主题语言"><a href="#设置主题语言" class="headerlink" title="设置主题语言"></a>设置主题语言</h3><p>next主题默认是英文名，如果你需要改成中文的只需要在站点配置文件中(<font color=red>注意不是主题配置文件</font>)设置language:zh-CN,然后需要hexo clean一下，再运行，否则看不到效果</p>
+<div class="note info">
+            <p>凡是修改站点配置文件，都要执行 hexo clean 之后再运行才能看到效果哦！<br>英文名对应的中文在next\language\zh-CN.yml文件下看到，可以按需修改名字和添加新的标签，后面有需求再介绍！</p>
+          </div>
+<h3 id="设置网站logo"><a href="#设置网站logo" class="headerlink" title="设置网站logo"></a>设置网站logo</h3><p>实现效果：</p>
+<p><img src="https://s2.ax1x.com/2020/02/24/38aL7R.png" alt="logo.png"><br>打开主题配置文件_config.yml，找到字段favicon:;<br><a href="https://imgchr.com/i/38dG40" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/24/38dG40.png" alt="38dG40.png"></a></p>
+<blockquote>
+<p>图标可以在<a href="https://www.iconfont.cn/collections/detail?cid=6502" target="_blank" rel="noopener">iconfont</a>下找自己喜欢的下载到themes\source\images文件夹下，进行大小的调整即可。</p>
+</blockquote>
+<h3 id="博客底部显示优化"><a href="#博客底部显示优化" class="headerlink" title="博客底部显示优化"></a>博客底部显示优化</h3><h4 id="隐藏底部powered-By-Hexo-强力驱动"><a href="#隐藏底部powered-By-Hexo-强力驱动" class="headerlink" title="隐藏底部powered By Hexo/强力驱动"></a>隐藏底部powered By Hexo/强力驱动</h4><p>打开主题配置文件，搜索footer:,进行以下设置<br><img src="https://s2.ax1x.com/2020/02/24/380J6U.png" alt="footer.png"></p>
+<h4 id="添加访问量和浏览量统计"><a href="#添加访问量和浏览量统计" class="headerlink" title="添加访问量和浏览量统计"></a>添加访问量和浏览量统计</h4><p>实现效果：<br><img src="https://s2.ax1x.com/2020/02/24/38BwDg.png" alt="count.png"></p>
+<ol>
+<li>由于next已经内置了统计，所以一般在主题配置文件中搜索busuanzi_count:进行以下修改即可实现<br><img src="https://s2.ax1x.com/2020/02/24/38BIa9.png" alt="busuanzi.png"></li>
+<li>上面的方法如果没有效果，可以采用下面的方法<br>在主题配置文件中查找footer:,<font color=red>添加</font>counter：true<br><img src="https://s2.ax1x.com/2020/02/24/38rBhn.png" alt="counter.png"><br>然后在themes\next\layout_partials\footer.swig文件，在- next_inject(‘footer’)(一般在最底处) 前添加下面代码</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;% if theme.footer.counter %&#125;</span><br><span class="line">    &lt;script async src&#x3D;&quot;&#x2F;&#x2F;busuanzi.ibruce.info&#x2F;busuanzi&#x2F;2.3&#x2F;busuanzi.pure.mini.js&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line">	&lt;div&gt;</span><br><span class="line">		&lt;span&gt;</span><br><span class="line">		&lt;span &gt;访问量:&lt;span id&#x3D;&quot;busuanzi_value_site_pv&quot;&gt;&lt;&#x2F;span&gt;次&lt;&#x2F;span&gt;</span><br><span class="line">		&lt;span class&#x3D;&quot;post-meta-divider&quot;&gt;|</span><br><span class="line">		&lt;&#x2F;span&gt;</span><br><span class="line">		&lt;span &gt;访客数:&lt;span id&#x3D;&quot;busuanzi_value_site_uv&quot;&gt;&lt;&#x2F;span&gt;人&lt;&#x2F;span&gt;</span><br><span class="line">	&lt;&#x2F;div&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="增加鼠标点击特效"><a href="#增加鼠标点击特效" class="headerlink" title="增加鼠标点击特效"></a>增加鼠标点击特效</h3><p>效果展示</p>
+<p><img src="https://s2.ax1x.com/2020/02/24/38cS3R.png" alt="effect1.png" title="text"><br><img src="https://s2.ax1x.com/2020/02/24/38Rjqx.png" alt="effect2.png" title="礼花绽放"><br><img src="https://s2.ax1x.com/2020/02/24/38WuFS.png" alt="effect3.png" title="爆炸"><br><img src="https://s2.ax1x.com/2020/02/24/38W0SJ.png" alt="effect4.png" title="爱心"></p>
+<p>一共四种效果，可以任意选择，下面一起实现把！</p>
+<ol>
+<li>创建文件<br>在themes\next\source\js\目录下创建cursor文件夹，在文件夹下新建四个js文件</li>
+</ol>
+<p>text.js内容如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">var a_idx &#x3D; 0;</span><br><span class="line">jQuery(document).ready(function($) &#123;</span><br><span class="line">  $(&quot;body&quot;).click(function(e) &#123;</span><br><span class="line">    var a &#x3D; new Array(&quot;喜欢我&quot;, &quot;不喜欢我&quot;);</span><br><span class="line">    var $i &#x3D; $(&quot;&lt;span&#x2F;&gt;&quot;).text(a[a_idx]);</span><br><span class="line">    var x &#x3D; e.pageX,</span><br><span class="line">    y &#x3D; e.pageY;</span><br><span class="line">    $i.css(&#123;</span><br><span class="line">      &quot;z-index&quot;: 99999,</span><br><span class="line">      &quot;top&quot;: y - 28,</span><br><span class="line">      &quot;left&quot;: x - a[a_idx].length * 8,</span><br><span class="line">      &quot;position&quot;: &quot;absolute&quot;,</span><br><span class="line">      &quot;color&quot;: &quot;#ff7a45&quot;</span><br><span class="line">    &#125;);</span><br><span class="line">    $(&quot;body&quot;).append($i);</span><br><span class="line">    $i.animate(&#123;</span><br><span class="line">      &quot;top&quot;: y - 180,</span><br><span class="line">      &quot;opacity&quot;: 0</span><br><span class="line">    &#125;, 1500, function() &#123;</span><br><span class="line">      $i.remove();</span><br><span class="line">    &#125;);</span><br><span class="line">    a_idx &#x3D; (a_idx + 1) % a.length;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>love.min.js内容如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!function(e,t,a)&#123;function n()&#123;c(&quot;.heart&#123;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);&#125;.heart:after,.heart:before&#123;content: &#39;&#39;;width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;&#125;.heart:after&#123;top: -5px;&#125;.heart:before&#123;left: -5px;&#125;&quot;),o(),r()&#125;function r()&#123;for(var e&#x3D;0;e&lt;d.length;e++)d[e].alpha&lt;&#x3D;0?(t.body.removeChild(d[e].el),d.splice(e,1)):(d[e].y--,d[e].scale+&#x3D;.004,d[e].alpha-&#x3D;.013,d[e].el.style.cssText&#x3D;&quot;left:&quot;+d[e].x+&quot;px;top:&quot;+d[e].y+&quot;px;opacity:&quot;+d[e].alpha+&quot;;transform:scale(&quot;+d[e].scale+&quot;,&quot;+d[e].scale+&quot;) rotate(45deg);background:&quot;+d[e].color+&quot;;z-index:99999&quot;);requestAnimationFrame(r)&#125;function o()&#123;var t&#x3D;&quot;function&quot;&#x3D;&#x3D;typeof e.onclick&amp;&amp;e.onclick;e.onclick&#x3D;function(e)&#123;t&amp;&amp;t(),i(e)&#125;&#125;function i(e)&#123;var a&#x3D;t.createElement(&quot;div&quot;);a.className&#x3D;&quot;heart&quot;,d.push(&#123;el:a,x:e.clientX-5,y:e.clientY-5,scale:1,alpha:1,color:s()&#125;),t.body.appendChild(a)&#125;function c(e)&#123;var a&#x3D;t.createElement(&quot;style&quot;);a.type&#x3D;&quot;text&#x2F;css&quot;;try&#123;a.appendChild(t.createTextNode(e))&#125;catch(t)&#123;a.styleSheet.cssText&#x3D;e&#125;t.getElementsByTagName(&quot;head&quot;)[0].appendChild(a)&#125;function s()&#123;return&quot;rgb(&quot;+~~(255*Math.random())+&quot;,&quot;+~~(255*Math.random())+&quot;,&quot;+~~(255*Math.random())+&quot;)&quot;&#125;var d&#x3D;[];e.requestAnimationFrame&#x3D;function()&#123;return e.requestAnimationFrame||e.webkitRequestAnimationFrame||e.mozRequestAnimationFrame||e.oRequestAnimationFrame||e.msRequestAnimationFrame||function(e)&#123;setTimeout(e,1e3&#x2F;60)&#125;&#125;(),n()&#125;(window,document);</span><br></pre></td></tr></table></figure>
+<p>firework.js内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br></pre></td><td class="code"><pre><span class="line">class Circle &#123;</span><br><span class="line">  constructor(&#123; origin, speed, color, angle, context &#125;) &#123;</span><br><span class="line">    this.origin &#x3D; origin</span><br><span class="line">    this.position &#x3D; &#123; ...this.origin &#125;</span><br><span class="line">    this.color &#x3D; color</span><br><span class="line">    this.speed &#x3D; speed</span><br><span class="line">    this.angle &#x3D; angle</span><br><span class="line">    this.context &#x3D; context</span><br><span class="line">    this.renderCount &#x3D; 0</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  draw() &#123;</span><br><span class="line">    this.context.fillStyle &#x3D; this.color</span><br><span class="line">    this.context.beginPath()</span><br><span class="line">    this.context.arc(this.position.x, this.position.y, 2, 0, Math.PI * 2)</span><br><span class="line">    this.context.fill()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  move() &#123;</span><br><span class="line">    this.position.x &#x3D; (Math.sin(this.angle) * this.speed) + this.position.x</span><br><span class="line">    this.position.y &#x3D; (Math.cos(this.angle) * this.speed) + this.position.y + (this.renderCount * 0.3)</span><br><span class="line">    this.renderCount++</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Boom &#123;</span><br><span class="line">  constructor (&#123; origin, context, circleCount &#x3D; 16, area &#125;) &#123;</span><br><span class="line">    this.origin &#x3D; origin</span><br><span class="line">    this.context &#x3D; context</span><br><span class="line">    this.circleCount &#x3D; circleCount</span><br><span class="line">    this.area &#x3D; area</span><br><span class="line">    this.stop &#x3D; false</span><br><span class="line">    this.circles &#x3D; []</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  randomArray(range) &#123;</span><br><span class="line">    const length &#x3D; range.length</span><br><span class="line">    const randomIndex &#x3D; Math.floor(length * Math.random())</span><br><span class="line">    return range[randomIndex]</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  randomColor() &#123;</span><br><span class="line">    const range &#x3D; [&#39;8&#39;, &#39;9&#39;, &#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39;, &#39;F&#39;]</span><br><span class="line">    return &#39;#&#39; + this.randomArray(range) + this.randomArray(range) + this.randomArray(range) + this.randomArray(range) + this.randomArray(range) + this.randomArray(range)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  randomRange(start, end) &#123;</span><br><span class="line">    return (end - start) * Math.random() + start</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  init() &#123;</span><br><span class="line">    for(let i &#x3D; 0; i &lt; this.circleCount; i++) &#123;</span><br><span class="line">      const circle &#x3D; new Circle(&#123;</span><br><span class="line">        context: this.context,</span><br><span class="line">        origin: this.origin,</span><br><span class="line">        color: this.randomColor(),</span><br><span class="line">        angle: this.randomRange(Math.PI - 1, Math.PI + 1),</span><br><span class="line">        speed: this.randomRange(1, 6)</span><br><span class="line">      &#125;)</span><br><span class="line">      this.circles.push(circle)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  move() &#123;</span><br><span class="line">    this.circles.forEach((circle, index) &#x3D;&gt; &#123;</span><br><span class="line">      if (circle.position.x &gt; this.area.width || circle.position.y &gt; this.area.height) &#123;</span><br><span class="line">        return this.circles.splice(index, 1)</span><br><span class="line">      &#125;</span><br><span class="line">      circle.move()</span><br><span class="line">    &#125;)</span><br><span class="line">    if (this.circles.length &#x3D;&#x3D; 0) &#123;</span><br><span class="line">      this.stop &#x3D; true</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  draw() &#123;</span><br><span class="line">    this.circles.forEach(circle &#x3D;&gt; circle.draw())</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class CursorSpecialEffects &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">   this.computerCanvas &#x3D; document.createElement(&#39;canvas&#39;)</span><br><span class="line">    this.renderCanvas &#x3D; document.createElement(&#39;canvas&#39;)</span><br><span class="line"></span><br><span class="line">   this.computerContext &#x3D; this.computerCanvas.getContext(&#39;2d&#39;)</span><br><span class="line">    this.renderContext &#x3D; this.renderCanvas.getContext(&#39;2d&#39;)</span><br><span class="line"></span><br><span class="line">   this.globalWidth &#x3D; window.innerWidth</span><br><span class="line">    this.globalHeight &#x3D; window.innerHeight</span><br><span class="line"></span><br><span class="line">   this.booms &#x3D; []</span><br><span class="line">    this.running &#x3D; false</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleMouseDown(e) &#123;</span><br><span class="line">    const boom &#x3D; new Boom(&#123;</span><br><span class="line">      origin: &#123; x: e.clientX, y: e.clientY &#125;,</span><br><span class="line">      context: this.computerContext,</span><br><span class="line">      area: &#123;</span><br><span class="line">        width: this.globalWidth,</span><br><span class="line">        height: this.globalHeight</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    boom.init()</span><br><span class="line">    this.booms.push(boom)</span><br><span class="line">    this.running || this.run()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handlePageHide() &#123;</span><br><span class="line">    this.booms &#x3D; []</span><br><span class="line">    this.running &#x3D; false</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  init() &#123;</span><br><span class="line">    const style &#x3D; this.renderCanvas.style</span><br><span class="line">    style.position &#x3D; &#39;fixed&#39;</span><br><span class="line">    style.top &#x3D; style.left &#x3D; 0</span><br><span class="line">    style.zIndex &#x3D; &#39;999999999999999999999999999999999999999999&#39;</span><br><span class="line">    style.pointerEvents &#x3D; &#39;none&#39;</span><br><span class="line"></span><br><span class="line">   style.width &#x3D; this.renderCanvas.width &#x3D; this.computerCanvas.width &#x3D; this.globalWidth</span><br><span class="line">    style.height &#x3D; this.renderCanvas.height &#x3D; this.computerCanvas.height &#x3D; this.globalHeight</span><br><span class="line"></span><br><span class="line">   document.body.append(this.renderCanvas)</span><br><span class="line"></span><br><span class="line">   window.addEventListener(&#39;mousedown&#39;, this.handleMouseDown.bind(this))</span><br><span class="line">   window.addEventListener(&#39;pagehide&#39;, this.handlePageHide.bind(this))</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  run() &#123;</span><br><span class="line">    this.running &#x3D; true</span><br><span class="line">    if (this.booms.length &#x3D;&#x3D; 0) &#123;</span><br><span class="line">      return this.running &#x3D; false</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">   requestAnimationFrame(this.run.bind(this))</span><br><span class="line"></span><br><span class="line">   this.computerContext.clearRect(0, 0, this.globalWidth, this.globalHeight)</span><br><span class="line">   this.renderContext.clearRect(0, 0, this.globalWidth, this.globalHeight)</span><br><span class="line"></span><br><span class="line">   this.booms.forEach((boom, index) &#x3D;&gt; &#123;</span><br><span class="line">      if (boom.stop) &#123;</span><br><span class="line">        return this.booms.splice(index, 1)</span><br><span class="line">      &#125;</span><br><span class="line">      boom.move()</span><br><span class="line">      boom.draw()</span><br><span class="line">    &#125;)</span><br><span class="line">    this.renderContext.drawImage(this.computerCanvas, 0, 0, this.globalWidth, this.globalHeight)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const cursorSpecialEffects &#x3D; new CursorSpecialEffects()</span><br><span class="line">cursorSpecialEffects.init()</span><br></pre></td></tr></table></figure>
+<p>explosion.min.js内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;use strict&quot;;function updateCoords(e)&#123;pointerX&#x3D;(e.clientX||e.touches[0].clientX)-canvasEl.getBoundingClientRect().left,pointerY&#x3D;e.clientY||e.touches[0].clientY-canvasEl.getBoundingClientRect().top&#125;function setParticuleDirection(e)&#123;var t&#x3D;anime.random(0,360)*Math.PI&#x2F;180,a&#x3D;anime.random(50,180),n&#x3D;[-1,1][anime.random(0,1)]*a;return&#123;x:e.x+n*Math.cos(t),y:e.y+n*Math.sin(t)&#125;&#125;function createParticule(e,t)&#123;var a&#x3D;&#123;&#125;;return a.x&#x3D;e,a.y&#x3D;t,a.color&#x3D;colors[anime.random(0,colors.length-1)],a.radius&#x3D;anime.random(16,32),a.endPos&#x3D;setParticuleDirection(a),a.draw&#x3D;function()&#123;ctx.beginPath(),ctx.arc(a.x,a.y,a.radius,0,2*Math.PI,!0),ctx.fillStyle&#x3D;a.color,ctx.fill()&#125;,a&#125;function createCircle(e,t)&#123;var a&#x3D;&#123;&#125;;return a.x&#x3D;e,a.y&#x3D;t,a.color&#x3D;&quot;#F00&quot;,a.radius&#x3D;.1,a.alpha&#x3D;.5,a.lineWidth&#x3D;6,a.draw&#x3D;function()&#123;ctx.globalAlpha&#x3D;a.alpha,ctx.beginPath(),ctx.arc(a.x,a.y,a.radius,0,2*Math.PI,!0),ctx.lineWidth&#x3D;a.lineWidth,ctx.strokeStyle&#x3D;a.color,ctx.stroke(),ctx.globalAlpha&#x3D;1&#125;,a&#125;function renderParticule(e)&#123;for(var t&#x3D;0;t&lt;e.animatables.length;t++)e.animatables[t].target.draw()&#125;function animateParticules(e,t)&#123;for(var a&#x3D;createCircle(e,t),n&#x3D;[],i&#x3D;0;i&lt;numberOfParticules;i++)n.push(createParticule(e,t));anime.timeline().add(&#123;targets:n,x:function(e)&#123;return e.endPos.x&#125;,y:function(e)&#123;return e.endPos.y&#125;,radius:.1,duration:anime.random(1200,1800),easing:&quot;easeOutExpo&quot;,update:renderParticule&#125;).add(&#123;targets:a,radius:anime.random(80,160),lineWidth:0,alpha:&#123;value:0,easing:&quot;linear&quot;,duration:anime.random(600,800)&#125;,duration:anime.random(1200,1800),easing:&quot;easeOutExpo&quot;,update:renderParticule,offset:0&#125;)&#125;function debounce(e,t)&#123;var a;return function()&#123;var n&#x3D;this,i&#x3D;arguments;clearTimeout(a),a&#x3D;setTimeout(function()&#123;e.apply(n,i)&#125;,t)&#125;&#125;var canvasEl&#x3D;document.querySelector(&quot;.fireworks&quot;);if(canvasEl)&#123;var ctx&#x3D;canvasEl.getContext(&quot;2d&quot;),numberOfParticules&#x3D;30,pointerX&#x3D;0,pointerY&#x3D;0,tap&#x3D;&quot;mousedown&quot;,colors&#x3D;[&quot;#FF1461&quot;,&quot;#18FF92&quot;,&quot;#5A87FF&quot;,&quot;#FBF38C&quot;],setCanvasSize&#x3D;debounce(function()&#123;canvasEl.width&#x3D;2*window.innerWidth,canvasEl.height&#x3D;2*window.innerHeight,canvasEl.style.width&#x3D;window.innerWidth+&quot;px&quot;,canvasEl.style.height&#x3D;window.innerHeight+&quot;px&quot;,canvasEl.getContext(&quot;2d&quot;).scale(2,2)&#125;,500),render&#x3D;anime(&#123;duration:1&#x2F;0,update:function()&#123;ctx.clearRect(0,0,canvasEl.width,canvasEl.height)&#125;&#125;);document.addEventListener(tap,function(e)&#123;&quot;sidebar&quot;!&#x3D;&#x3D;e.target.id&amp;&amp;&quot;toggle-sidebar&quot;!&#x3D;&#x3D;e.target.id&amp;&amp;&quot;A&quot;!&#x3D;&#x3D;e.target.nodeName&amp;&amp;&quot;IMG&quot;!&#x3D;&#x3D;e.target.nodeName&amp;&amp;(render.play(),updateCoords(e),animateParticules(pointerX,pointerY))&#125;,!1),setCanvasSize(),window.addEventListener(&quot;resize&quot;,setCanvasSize,!1)&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>然后在themes\next\layout\目录下创建_custom\custom.swig文件，将下面的代码添加进去<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;# 鼠标点击特效 #&#125;</span><br><span class="line">&#123;% if theme.cursor_effect &#x3D;&#x3D; &quot;firework&quot; %&#125;</span><br><span class="line">  &lt;script async src&#x3D;&quot;&#x2F;js&#x2F;cursor&#x2F;firework.js&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line">&#123;% elseif theme.cursor_effect &#x3D;&#x3D; &quot;explosion&quot; %&#125;</span><br><span class="line">  &lt;canvas class&#x3D;&quot;fireworks&quot; style&#x3D;&quot;position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;&quot; &gt;&lt;&#x2F;canvas&gt;</span><br><span class="line">  &lt;script src&#x3D;&quot;&#x2F;&#x2F;cdn.bootcss.com&#x2F;animejs&#x2F;2.2.0&#x2F;anime.min.js&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line">  &lt;script async src&#x3D;&quot;&#x2F;js&#x2F;cursor&#x2F;explosion.min.js&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line">&#123;% elseif theme.cursor_effect &#x3D;&#x3D; &quot;love&quot; %&#125;</span><br><span class="line">  &lt;script async src&#x3D;&quot;&#x2F;js&#x2F;cursor&#x2F;love.min.js&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line">&#123;% elseif theme.cursor_effect &#x3D;&#x3D; &quot;text&quot; %&#125;</span><br><span class="line">  &lt;script async src&#x3D;&quot;&#x2F;js&#x2F;cursor&#x2F;text.js&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure></li>
+<li>最后在\layout_layout.swig文件&#60;/body&#62;前面加入下面代码<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% include &#39;_custom&#x2F;custom.swig&#39; %&#125;</span><br></pre></td></tr></table></figure></li>
+<li>在主题配置文件最后添加下面内容，刷新即可看到效果<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#鼠标点击特效</span><br><span class="line">cursor_effect: love#效果自己选[填入上面创建的js文件的文件名即可]</span><br></pre></td></tr></table></figure>
+<h3 id="在文章末尾增加“本文结束”标记"><a href="#在文章末尾增加“本文结束”标记" class="headerlink" title="在文章末尾增加“本文结束”标记"></a>在文章末尾增加“本文结束”标记</h3>效果如下：<br><img src="https://s2.ax1x.com/2020/02/24/38Hym4.png" alt="end.png"></li>
+<li>在themes\next\layout_macro下创建passage-end-tag.swig文件，并粘贴以下代码<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">    &#123;% if not is_index %&#125;</span><br><span class="line">        &lt;div style&#x3D;&quot;text-align:center;color: #ccc;font-size:14px;&quot;&gt;-------------本文结束&lt;i class&#x3D;&quot;fa fa-heart&quot;&gt;&lt;&#x2F;i&gt;感谢阅读-------------&lt;&#x2F;div&gt;</span><br><span class="line">    &#123;% endif %&#125;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure></li>
+<li>在该目录下的post.swig文件中下面位置添加代码<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">   &#123;#####################&#125;</span><br><span class="line">   &#123;### END POST BODY ###&#125;</span><br><span class="line">   &#123;#####################&#125;</span><br><span class="line">&lt;!--文章末尾添加结束表示--&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">&#123;% if not is_index %&#125;</span><br><span class="line">	&#123;% include &#39;passage-end-tag.swig&#39; %&#125;</span><br><span class="line">&#123;% endif %&#125;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure></li>
+<li>打开主题配置文件，在末尾添加以下字段，完成操作<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#文章末尾添加“本文结束”标记</span><br><span class="line">passage_end_tag:</span><br><span class="line">  enabled: true</span><br></pre></td></tr></table></figure>
+进阶篇到此结束，点击终极篇来完成博客的终极美化把！</li>
+</ol>
+
+    </div>
+    
+    
+    
+	<!--文章末尾添加结束表示-->
+	<div>
+	
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-heart"></i>感谢阅读-------------</div>
+    
+</div>
+	
+	</div>
+
+	
+<div>
+      
+          
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2020/02/24/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2(%E8%BF%9B%E9%98%B6%E7%AF%87)/">hexo搭建个人博客(进阶篇)</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Mark 的个人博客">Mark</a></p>
+  <p><span>发布时间:</span>2020年02月24日 - 10:02</p>
+  <p><span>最后更新:</span>2020年02月24日 - 10:02</p>
+  <p><span>原始链接:</span><a href="/2020/02/24/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2(%E8%BF%9B%E9%98%B6%E7%AF%87)/" title="hexo搭建个人博客(进阶篇)">http://gbw610.top/2020/02/24/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2(%E8%BF%9B%E9%98%B6%E7%AF%87)/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://gbw610.top/2020/02/24/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2(%E8%BF%9B%E9%98%B6%E7%AF%87)/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+      $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+        });
+    });  
+</script>
+
+      
+</div>
+        <div class="reward-container">
+  <div>亲,留步</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Mark 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Mark 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/hexo/" rel="tag"><i class="fa fa-tag"></i> hexo</a>
+              <a href="/tags/Next/" rel="tag"><i class="fa fa-tag"></i> Next</a>
+          </div>
+
+        
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/23/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2(%E5%85%A5%E9%97%A8%E7%AF%87)/" rel="prev" title="hexo搭建个人博客(入门篇)">
+      <i class="fa fa-chevron-left"></i> hexo搭建个人博客(入门篇)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/24/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2(%E7%BB%88%E6%9E%81%E7%AF%87)/" rel="next" title="hexo搭建个人博客(终极篇)">
+      hexo搭建个人博客(终极篇) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置博客基本信息"><span class="nav-number">1.</span> <span class="nav-text">配置博客基本信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置主题"><span class="nav-number">2.</span> <span class="nav-text">配置主题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法1"><span class="nav-number">2.1.</span> <span class="nav-text">方法1</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#进入网站后进行如下操作"><span class="nav-number">2.1.1.</span> <span class="nav-text">进入网站后进行如下操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#点击进入"><span class="nav-number">2.1.2.</span> <span class="nav-text">点击进入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#下载"><span class="nav-number">2.1.3.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将下载的文件解压到博客站点文件夹-themes下，并命名为next"><span class="nav-number">2.1.4.</span> <span class="nav-text">将下载的文件解压到博客站点文件夹\themes下，并命名为next</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注意，一般解压之后文件会嵌套几个文件，这里next目录下应为下图所示，如果不是，把下图所示的所有文件剪贴到next目录下即可"><span class="nav-number">2.1.5.</span> <span class="nav-text">注意，一般解压之后文件会嵌套几个文件，这里next目录下应为下图所示，如果不是，把下图所示的所有文件剪贴到next目录下即可</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法2"><span class="nav-number">2.2.</span> <span class="nav-text">方法2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#演示next"><span class="nav-number">3.</span> <span class="nav-text">演示next</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主题优化"><span class="nav-number">4.</span> <span class="nav-text">主题优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设置头像，并带有旋转效果"><span class="nav-number">4.1.</span> <span class="nav-text">设置头像，并带有旋转效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置个人社交图标链接"><span class="nav-number">4.2.</span> <span class="nav-text">设置个人社交图标链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置炫酷动态背景"><span class="nav-number">4.3.</span> <span class="nav-text">设置炫酷动态背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置主题语言"><span class="nav-number">4.4.</span> <span class="nav-text">设置主题语言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置网站logo"><span class="nav-number">4.5.</span> <span class="nav-text">设置网站logo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#博客底部显示优化"><span class="nav-number">4.6.</span> <span class="nav-text">博客底部显示优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#隐藏底部powered-By-Hexo-强力驱动"><span class="nav-number">4.6.1.</span> <span class="nav-text">隐藏底部powered By Hexo&#x2F;强力驱动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加访问量和浏览量统计"><span class="nav-number">4.6.2.</span> <span class="nav-text">添加访问量和浏览量统计</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增加鼠标点击特效"><span class="nav-number">4.7.</span> <span class="nav-text">增加鼠标点击特效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在文章末尾增加“本文结束”标记"><span class="nav-number">4.8.</span> <span class="nav-text">在文章末尾增加“本文结束”标记</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mark"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Mark</p>
+  <div class="site-description" itemprop="description">说点什么呢...</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/bamboo3333" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;bamboo3333" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://me.csdn.net/qq_42376889" title="CSDN → https:&#x2F;&#x2F;me.csdn.net&#x2F;qq_42376889" rel="noopener" target="_blank">CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.baidu.com/" title="Baidu → https:&#x2F;&#x2F;www.baidu.com" rel="noopener" target="_blank">Baidu</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      博客推荐
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/qq_42376889/article/details/105558723" title="https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_42376889&#x2F;article&#x2F;details&#x2F;105558723" rel="noopener" target="_blank">SpringBoot项目部署到云服务器三部曲</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+	  <!--添加tag云-->
+	
+		<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+		<div class="widget-wrap">
+			<div id="myCanvasContainer" class="widget tagcloud">
+				<canvas width="220" height="250" id="resCanvas" style="width=100%">
+					<ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BFS/" rel="tag">BFS</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DFS/" rel="tag">DFS</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Next/" rel="tag">Next</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/" rel="tag">c++</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cin/" rel="tag">cin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/multiset/" rel="tag">multiset</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a><span class="tag-list-count">17</span></li></ul>
+				</canvas>
+			</div>
+		</div>
+	
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mark</span>
+</div>
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	<div>
+		<span>
+		<span >访问量:<span id="busuanzi_value_site_pv"></span>次</span>
+		<span class="post-meta-divider">|
+		</span>
+		<span >访客数:<span id="busuanzi_value_site_uv"></span>人</span>
+	</div>
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 23569,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: false,
+      appId: 'y5oXKi70BWjenSMLugWyBQ1h-gzGzoHsz',
+      appKey: 'Rr8aI4SwVXHwjReJuBxk3idn',
+      placeholder: "欢迎发言(*^_^*)",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '10' || 10,
+      visitor: true,
+      lang: '' || 'zh-cn',
+      path: location.pathname,
+      recordIP: true,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+  
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+<!-- 页面点击小红心 -->
+<!-- <script type="text/javascript" src="/js/clicklove.js"></script> -->
+  <!-- 自己添加的 -->
+  
+
+  <script async src="/js/cursor/firework.js"></script>
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+  
+<!--添加知乎连接脚本-->
+<script type="text/javascript" src="/js/zhihu.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>
